@@ -1,1 +1,1 @@
-web: gunicorn trump.app:app
+web: gunicorn --chdir trump app:app
