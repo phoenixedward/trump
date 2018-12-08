@@ -1,22 +1,47 @@
-var approve = d3.json("https://trumptweettracker.herokuapp.com/approve").then( function(dat) {
+var approve = d3.json("http://localhost:5000/twitter").then( function(dat) {
   var approval = []
-  var date = []
+  var dates = []
+  var favs = []
 
   for (i =0; i < dat.length; i++) {
+    var date = new Date(dat[i].enddate['$date'])
+
+    dates.push(date)
     approval.push(dat[i].approve)
-    date.push(dat[i].enddate)
+    favs.push(dat[i].Favs)
   } 
   
   console.log(approval)
 
   var trace1 = {
-    x: date,
+    x: dates,
     y: approval,
-    type: 'lines'
+    type: 'lines',
+    name: 'Approval Rating'
   };
 
-  var data = [trace1]
+  var trace2 = {
+    x: dates,
+    y: favs,
+    type: 'lines',
+    yaxis: 'y2',
+    name: 'Twitter Favorites'
+  }; 
 
-  Plotly.newPlot('myDiv', data);
+  var layout = {
+    title: 'Trump Approval vs. Twitter Favorites',
+    yaxis: {title: 'Rating'},
+    yaxis2: {
+      title: 'Favorite Count',
+      overlaying: 'y',
+      side: 'right'
+    },
+    scaleanchor:'y'
+  };
+
+
+  var data = [trace1,trace2]
+
+  Plotly.newPlot('myDiv', data, layout);
 
 });
