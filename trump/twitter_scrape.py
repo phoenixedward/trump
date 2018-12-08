@@ -11,8 +11,8 @@ import json
 
 # edit these three variables
 user = 'realDonaldTrump'
-start = datetime.datetime(2018, 12, 1)  # year, month, day
-end = datetime.datetime(2018, 12, 1)  # year, month, day
+start = datetime.datetime(2017, 1, 11)  # year, month, day
+end = datetime.datetime(2018, 12, 3)  # year, month, day
 
 # only edit these if you're having problems
 
@@ -20,9 +20,9 @@ end = datetime.datetime(2018, 12, 1)  # year, month, day
 days = (end - start).days + 1
 user = user.lower()
 
-driver = webdriver.Chrome("C:/Users/PhoenixJauregui/Desktop/webpage/chromedriver2.exe")
+driver = webdriver.Chrome("C:/Users/PhoenixJauregui/Documents/trump/trump/chromedriver2.exe")
 
-executable_path = {'executable_path': 'C:/Users/PhoenixJauregui/Desktop/webpage/chromedriver2.exe'}
+executable_path = {'executable_path': 'C:/Users/PhoenixJauregui/Documents/trump/trump/chromedriver2.exe'}
 browser = Browser('chrome', **executable_path, headless=False)
 
 delay = 1
@@ -113,28 +113,30 @@ twitter["Date"] = pd.to_datetime(twitter["Date"].values, infer_datetime_format=T
 
 twitter['Favs'] = [int(i.replace('K', '00').replace('.','')) for i in twitter['Favs']]
 twitter = twitter[twitter['Favs'] > 100]
-twitter = twitter.set_index("Date")['2017-1-11':'2018-12-04']
+twitter = twitter.set_index("Date")
 twitter_group = twitter.groupby(pd.TimeGrouper("1d"))["Favs"].mean()
 
 polls = pd.read_csv("https://projects.fivethirtyeight.com/trump-approval-data/approval_polllist.csv")
 polls["enddate"] = pd.to_datetime(polls["enddate"].values)
-polls_filtered = polls.set_index("enddate")
+polls_filtered = polls.set_index("enddate")['2017-1-11':'2018-12-04']
 polls_group = polls_filtered.groupby(pd.TimeGrouper("1d"))['approve'].mean()
 
 complete = pd.DataFrame(twitter_group).join(polls_group,how="right")
 complete_final = complete.reset_index()
 complete_final = complete_final.dropna()
 
-dat = complete_final.to_json(orient = "index")
+dat = complete_final.to_dict(orient = "records")
 
-dat2 = json.loads(dat)
+mongo = MongoClient('ds017678.mlab.com', 17678)
+db = mongo['heroku_sjm9g8xc']
+db.authenticate('heroku_sjm9g8xc', '4mvq9ej8mp5hlvqdqbgc53d2bf')
 
-mongo = MongoClient('ds227664.mlab.com', 27664)
-db = mongo['trump_twitter']
-db.authenticate('heroku_cfwm26d0', 'tnvilmu4pm12p7dofk65b1s2nd')
+scraped = db.trump_twitter
 
-scraped = mongo.db.trump_twitter
-scraped.update({},dat2,upsert=True)
+for pushed in dat:
+    scraped.insert(pushed)
+
+loaded = scraped.find() 
 
 print(dat)
-
+    
