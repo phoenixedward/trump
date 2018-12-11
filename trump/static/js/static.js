@@ -1,4 +1,4 @@
-var approve = d3.json("http://localhost:5000/twitter").then( function(dat) {
+var approve = d3.json("https://trumptweettracker.herokuapp.com/twitter").then( function(dat) {
   var approval = []
   var dates = []
   var favs = []
