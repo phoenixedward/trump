@@ -13,18 +13,22 @@ mongo = PyMongo(app)
 
 @app.route('/twitter')
 def twitter_data():
-    scraped = mongo.db.trump_twitter.find()
+    scraped = mongo.db.twitter.find()
     scrape = dumps(scraped)
     return scrape
 
-@app.route('/approve')
+@app.route('/polls')
 def aprove_data():
-    data = pd.read_csv("https://projects.fivethirtyeight.com/trump-approval-data/approval_polllist.csv")
-    data["enddate"] = pd.to_datetime(data["enddate"].values, infer_datetime_format=True)
-    data2 = data.set_index("enddate").groupby(pd.TimeGrouper("W")).mean()
-    data3 = data2.reset_index()
-    dat = data3.to_json(orient = "records")
-    return dat
+    scraped2 = mongo.db.polls.find()
+    scrape2 = dumps(scraped)
+    return scrape2
+
+@app.route('/compare')
+def aprove_data():
+    scraped2 = mongo.db.compare.find()
+    scrape2 = dumps(scraped)
+    return scrape2
+
 
 @app.route('/')
 def main():
