@@ -20,14 +20,14 @@ def twitter_data():
 @app.route('/polls')
 def aprove_data():
     scraped2 = mongo.db.polls.find()
-    scrape2 = dumps(scraped)
+    scrape2 = dumps(scraped2)
     return scrape2
 
 @app.route('/compare')
 def aprove_data():
-    scraped2 = mongo.db.compare.find()
-    scrape2 = dumps(scraped)
-    return scrape2
+    scraped3 = mongo.db.compare.find()
+    scrape3 = dumps(scraped3)
+    return scrape3
 
 
 @app.route('/')
