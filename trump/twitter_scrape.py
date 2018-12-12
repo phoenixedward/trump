@@ -126,17 +126,23 @@ complete_final = complete.reset_index()
 complete_final = complete_final.dropna()
 
 dat = complete_final.to_dict(orient = "records")
+dat2 = twitter.to_dict(orient = "records")
+dat3 = polls_filtered.to_dict(orient = "records")
 
 mongo = MongoClient('ds017678.mlab.com', 17678)
 db = mongo['heroku_sjm9g8xc']
 db.authenticate('heroku_sjm9g8xc', '4mvq9ej8mp5hlvqdqbgc53d2bf')
 
-scraped = db.trump_twitter
+scraped = db.compare
+scraped2 = db.twitter
+scraped3 = db.polls
 
 for pushed in dat:
     scraped.insert(pushed)
 
-loaded = scraped.find() 
+for pushed in dat2:
+    scraped2.insert(pushed)
 
-print(dat)
+for pushed in dat3:
+    scraped3.insert(pushed)
     

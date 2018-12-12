@@ -30,13 +30,15 @@ var approve = d3.json("http://localhost:5000/twitter").then( function(dat) {
 
   var layout = {
     title: 'Trump Approval vs. Twitter Favorites',
-    yaxis: {title: 'Rating'},
+    yaxis: {title: 'Rating',
+    scaleanchor:'y2',
+    scaleratio: 2000
+  },
     yaxis2: {
       title: 'Favorite Count',
       overlaying: 'y',
       side: 'right'
-    },
-    scaleanchor:'y'
+    }
   };
 
 
