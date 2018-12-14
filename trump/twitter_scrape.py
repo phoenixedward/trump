@@ -131,7 +131,7 @@ complete = pd.DataFrame(twitter_group).join(polls_group,how="right")
 complete_final = complete.reset_index()
 complete_final = complete_final.dropna()
 
-'''dat = complete_final.to_dict(orient = "records")
+dat = complete_final.to_dict(orient = "records")
 dat2 = twitter.to_dict(orient = "records")
 dat3 = polls_filtered.to_dict(orient = "records")
 
@@ -150,4 +150,4 @@ for pushed in dat2:
     scraped2.insert(pushed)
 
 for pushed in dat3:
-    scraped3.insert(pushed)'''
+    scraped3.insert(pushed)
