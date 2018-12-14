@@ -25,11 +25,7 @@ def aprove_data():
 
 @app.route('/compare')
 def compare_data():
-<<<<<<< HEAD
     scraped3 = mongo.db.compare.find()
-=======
-    scraped3 = mongo.db.trump_twitter.find()
->>>>>>> 4b2ccbe668071d318bd4558dd6b2d13ba3e3369d
     scrape3 = dumps(scraped3)
     return scrape3
 
