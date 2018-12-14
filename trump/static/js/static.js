@@ -4,7 +4,7 @@ var approve = d3.json("https://trumptweettracker.herokuapp.com/compare").then( f
   var favs = []
 
   for (i =0; i < dat.length; i++) {
-    var date = new Date(dat[i].enddate['$date'])
+    var date = new Date(dat[i].startdate['$date'])
 
     dates.push(date)
     approval.push(dat[i].approve)
