@@ -1,4 +1,4 @@
-var approve = d3.json("https://trumptweettracker.herokuapp.com/twitter").then( function(dat) {
+var approve = d3.json("https://trumptweettracker.herokuapp.com/compare").then( function(dat) {
   var approval = []
   var dates = []
   var favs = []

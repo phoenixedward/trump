@@ -24,7 +24,7 @@ def aprove_data():
     return scrape2
 
 @app.route('/compare')
-def aprove_data():
+def compare_data():
     scraped3 = mongo.db.compare.find()
     scrape3 = dumps(scraped3)
     return scrape3
