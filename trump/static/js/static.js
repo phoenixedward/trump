@@ -31,8 +31,6 @@ var approve = d3.json("https://trumptweettracker.herokuapp.com/compare").then( f
   var layout = {
     title: 'Trump Approval vs. Twitter Favorites',
     yaxis: {title: 'Rating',
-    scaleanchor:'y2',
-    scaleratio: 2000
   },
     yaxis2: {
       title: 'Favorite Count',
