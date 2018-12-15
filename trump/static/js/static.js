@@ -7,7 +7,7 @@ var approve = d3.json("https://jammin-brah.herokuapp.com/compare").then( functio
     var date = new Date(dat[i].enddate['$date'])
 
     dates.push(date)
-    approval.push(dat[i].approve)
+    approval.push(dat[i].adjusted_approve)
     favs.push(dat[i].Favs)
   } 
   
