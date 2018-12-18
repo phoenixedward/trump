@@ -117,13 +117,13 @@ twitter = twitter.set_index("Date")
 twitter_group = twitter.groupby(pd.TimeGrouper("1d"))["Favs"].mean()
 
 polls = pd.read_csv("https://projects.fivethirtyeight.com/trump-approval-data/approval_polllist.csv")
-polls["startdate"] = pd.to_datetime(polls["startdate"].values)
-polls_filtered = polls.set_index("startdate")['2017-1-11':'2018-12-04']
+polls["enddate"] = pd.to_datetime(polls["enddate"].values)
+polls_filtered = polls.set_index("enddate")['2017-1-11':'2018-12-04']
 polls_group = polls_filtered.groupby(pd.TimeGrouper("1d"))['approve'].mean()
 
 complete = pd.DataFrame(twitter_group).join(polls_group,how="right")
 complete_final = complete.reset_index()
-complete_final = complete_final.dropna().sort_values("startdate")
+complete_final = complete_final.dropna()
 
 dat = complete_final.to_dict(orient = "records")
 dat2 = twitter.to_dict(orient = "records")

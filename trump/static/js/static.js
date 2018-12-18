@@ -1,4 +1,5 @@
 var approve = d3.json("https://jammin-brah.herokuapp.com/compare").then( function(dat) {
+
   var approval = []
   var dates = []
   var favs = []
