@@ -1,13 +1,14 @@
-var approve = d3.json("http://localhost:5000/compare").then( function(dat) {
+var approve = d3.json("https://jammin-brah.herokuapp.com/compare").then( function(dat) {
+
   var approval = []
   var dates = []
   var favs = []
 
   for (i =0; i < dat.length; i++) {
-    var date = new Date(dat[i].startdate['$date'])
+    var date = new Date(dat[i].enddate['$date'])
 
     dates.push(date)
-    approval.push(dat[i].approve)
+    approval.push(dat[i].adjusted_approve)
     favs.push(dat[i].Favs)
   } 
   
